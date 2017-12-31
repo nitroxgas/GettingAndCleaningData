@@ -57,7 +57,7 @@ tidy_data <- merge(activitylables, tidy_data, by.x = "idactivity", by.y = "idact
 tidy_data <- tidy_data[,2:89]
 # Write
 setwd("../")
-write.table(tidy_data,"tidy.txt",sep = ",")
+write.table(tidy_data,"tidy.txt", row.name=FALSE)
 
 # Cleanning environment
 rm(ytest)

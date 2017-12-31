@@ -21,7 +21,7 @@
 1      WALKING         1         0.2773308       -0.01738382        -0.1111481 ...
 2      WALKING         2         0.2764266       -0.01859492        -0.1055004 ...
 
-The generated file contains the data set, separated by commas and with a header.
+The generated file contains the data set, separated by spaces and with a header.
 
 Variable mames: 
 
