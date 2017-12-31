@@ -13,6 +13,16 @@ This Repo contains the final application to the Course Project, it contain:
 
 So, to generate the tidy.txt you must fork this repo, pull to your R enviroment (to create this project was used RStudio Version 1.1.383), install the dplyr and plyr packages, and execute the script run_analysis.R; The result shoul be a file called tidy.txt and a dataset in the global environment called tidy_data;
 
+The run_analysis.R script do the following:
+* First it reads to the R environment all the data from the test and training directories, as well all the labels and informations about the activities and subjects.
+* It assign lables and descriptive names to the variables in the environment;
+* Exclude from the tables all unessesary data, keeping only variables with means and standart deviations;
+* Merges trainning and tests data in a single dataset;
+* Uses ddply and colMeans to calculate the means to each variable, grouped by activitie and subject;
+* Adds a descriptive name to the activity;
+* Writes the final tidy data to the file;
+* Cleans the environment;
+
 required to submitions: 
 1) a tidy data set as described below, 
 2) a link to a Github repository with your script for performing the analysis, and 
