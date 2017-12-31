@@ -19,7 +19,7 @@ setwd("./UCI HAR Dataset/")
 activitylables <- read.table("activity_labels.txt", header = FALSE)
 features <- read.table("features.txt", header = FALSE)[,2]
 
-# Reading the Datasets
+# Reading the Dataset
 idtest <- read.table("./test/subject_test.txt",header = FALSE)
 xtest <- read.table("./test/X_test.txt", header = FALSE)
 ytest <- read.table("./test/y_test.txt", header = FALSE)
@@ -44,8 +44,11 @@ xtrain <- xtrain[,grepl("[mM]ean|[sS]td",colnames(xtrain))]
 
 # 3 - Using descriptive name for the activities
 library(dplyr)
-ytest <- left_join(ytest, activitylables, by = "idactivity")
-ytrain <- left_join(ytrain, activitylables, by = "idactivity")
+#ytest <- merge(ytest, activitylables, by.x = "idactivity", by.y = "idactivity")
+#ytrain <- merge(ytrain, activitylables, by.x = "idactivity", by.y = "idactivity")
+#ytest <- left_join(ytest, activitylables, by = "idactivity")
+#ytrain <- left_join(ytrain, activitylables, by = "idactivity")
+
 
 # 1 - Merges the training and the test
 # Merging datasets
@@ -53,17 +56,27 @@ test_data <- cbind(idtest,ytest,xtest)
 train_data <- cbind(idtrain,ytrain,xtrain)
 final_data <- rbind(test_data,train_data)
 
-# Cleanning environment
-rm(ytest)
-rm(xtest)
-rm(ytrain)
-rm(xtrain)
-rm(test_data)
-rm(train_data)
-rm(idtest)
-rm(idtrain)
-rm(subjecttest)
-rm(activitylables)
-rm(features)
+# 5 - Calculate the average of each variable for each activity and each subject.
+library(plyr)
+tidy_data <- ddply(final_data, .(idactivity, idsubject), colMeans)
 
+# 3 - Using descriptive name for the activities
+tidy_data <- merge(activitylables, tidy_data, by.x = "idactivity", by.y = "idactivity")
+
+# Write
 setwd("../")
+write.table(tidy_data[,2:89],"tidy.txt",sep = ",")
+
+# Cleanning environment
+#rm(ytest)
+#rm(xtest)
+#rm(ytrain)
+#rm(xtrain)
+#rm(test_data)
+#rm(train_data)
+#rm(idtest)
+#rm(idtrain)
+#rm(subjecttest)
+#rm(activitylables)
+#rm(features)
+
