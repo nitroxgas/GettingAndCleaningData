@@ -42,14 +42,6 @@ names(idtrain) = "idsubject"
 xtest <- xtest[,grepl("[mM]ean|[sS]td",colnames(xtest))]
 xtrain <- xtrain[,grepl("[mM]ean|[sS]td",colnames(xtrain))]
 
-# 3 - Using descriptive name for the activities
-library(dplyr)
-#ytest <- merge(ytest, activitylables, by.x = "idactivity", by.y = "idactivity")
-#ytrain <- merge(ytrain, activitylables, by.x = "idactivity", by.y = "idactivity")
-#ytest <- left_join(ytest, activitylables, by = "idactivity")
-#ytrain <- left_join(ytrain, activitylables, by = "idactivity")
-
-
 # 1 - Merges the training and the test
 # Merging datasets
 test_data <- cbind(idtest,ytest,xtest)
@@ -62,21 +54,20 @@ tidy_data <- ddply(final_data, .(idactivity, idsubject), colMeans)
 
 # 3 - Using descriptive name for the activities
 tidy_data <- merge(activitylables, tidy_data, by.x = "idactivity", by.y = "idactivity")
-
+tidy_data <- tidy_data[,2:89]
 # Write
 setwd("../")
-write.table(tidy_data[,2:89],"tidy.txt",sep = ",")
+write.table(tidy_data,"tidy.txt",sep = ",")
 
 # Cleanning environment
-#rm(ytest)
-#rm(xtest)
-#rm(ytrain)
-#rm(xtrain)
-#rm(test_data)
-#rm(train_data)
-#rm(idtest)
-#rm(idtrain)
-#rm(subjecttest)
-#rm(activitylables)
-#rm(features)
-
+rm(ytest)
+rm(xtest)
+rm(ytrain)
+rm(xtrain)
+rm(test_data)
+rm(train_data)
+rm(idtest)
+rm(idtrain)
+rm(activitylables)
+rm(features)
+rm(final_data)
